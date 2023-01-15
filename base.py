@@ -184,11 +184,11 @@ class Index:
 
     def report(self):
         for pname, pkg in self.packages.items():
-            print "--------  ", pname, "  ----------------"
-            print pkg.filename
+            print ("--------  ", pname, "  ----------------")
+            print (pkg.filename)
             for p in pkg.deltas:
-                print "      ", p
-            print "-----------------------------------------"
+                print ("      "), p
+            print ("-----------------------------------------")
 
             
 class Pkg:
@@ -202,11 +202,11 @@ class Pkg:
         self.fname = self.filename.split("/")[-1]
 
     def report(self):
-        print self.name
-        print self.filename
-        print "Deltas"
+        print (self.name)
+        print (self.filename)
+        print ("Deltas")
         for i in self.deltas:
-            print "  ", i
+            print ("  "), i
 
     def setRelease(self, release):
         self.release = release
@@ -229,9 +229,9 @@ class Pkg:
             cmd = "sha1sum %s/%s | awk '{print $1}' "  % (CACHE, self.fname)
             cachehash = os.popen(cmd,"r").readlines()[0].strip()
             if cachehash != self.hash:
-                print "HASH FAILED: downloading again"
-                print "Expected : %s" % self.hash
-                print "Found    : %s" % cachehash
+                print ("HASH FAILED: downloading again")
+                print ("Expected : %s") % self.hash
+                print ("Found    : %s") % cachehash
                 erase = "rm -rf %s/%s" % (CACHE, self.fname ) 
                 os.system(erase)
                 cmd = "wget  %s/%s -O %s/%s" % (self.base, self.filename, CACHE, self.fname)
@@ -385,12 +385,12 @@ class Chroot:
         for paket in liste:
             paket = paket.strip()
             repo, pkg = self.index.package(paket)
-            print "%s reposundan %s kuruluyor" % (repo, paket)
+            print ("%s reposundan %s kuruluyor" % (repo, paket))
             pkg.install(self.root)
 
     def addRepo(self,name, url, place = 0):
         cmd = "pisi ar  %s %s --at %d" % (name, url, place)
-        print cmd
+        print (cmd)
         self.runCommand("pisi ar  %s %s --at %d" % (name, url, place))
 
     def buildpkg(self, pkgname):
